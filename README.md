@@ -1,2 +1,16 @@
 CS4227
 ======
+Traffic Simulator
+Version One
+  1 Lane with Traffic lights
+  All drivers are to follow traffic light laws
+  Different types of Cars:
+      Slow
+      Fast
+  Different types of drivers:
+      Crazy
+      Cautious
+      Authority
+  Traffic lights
+      //Lin is Author
+  
