@@ -15,5 +15,24 @@ Version One
       Cautious
       Authority
     Traffic lights
-      //Lin is Author nbjhgug
+      //Lin is Author
+      
+END RESULT
+- Have a 4 way intersection of cars getting from point A to point B
+  - point A can start anywhere
+  - point B can end anywhere but not on the same road on that side of the intersection (aka. NO U TURNS)
+    Example:
+            v   ^
+        ___|  |  |___
+    <-  ___       ___ <-    
+     -> ___       ___ ->
+           |  |  |
+            v   ^
+  
+- This is a basic simulation so there are 2 lanes on each road
+  - each go in opposite directions (EXAMPLE ABOVE)
+- traffic lights are random following basic rules
+- cars follow lights rules
+
+  
   
