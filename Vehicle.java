@@ -6,4 +6,5 @@ public interface Vehicle {
 	public void setPosition(int a); //sets position on road (in this case one lane)
 	public int getMaxSpeed();
 	public int getPosition();
+	void create();
 }
