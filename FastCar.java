@@ -1,22 +1,27 @@
 
-public class CrazyDriver implements Driver{
-	int SpeedAbove = -10; //drives 10 below limit
+public class FastCar implements Vehicle{
+
+	int MaxSpeed = 200;
+	int CurrentPos;
 	
-	Vehicle auto;
-	public void setSpeedAbove(int a){
-		SpeedAbove = a;
-	}
-	public int getVehicleMax(){
-		return auto.getMaxSpeed();
-	}
-	public Vehicle getVehicle(){
-		return auto;
-	}
-	public void setVehicle(){
+	public int getDistanceBehind(){
 		//TODO
+		return 0;
 	}
-	public void setVehicle(Vehicle car){
-		auto = car;
+	public int getDistanceInfront(){
+		//TODO
+		return 0;
+	}
+	public void setPosition(int a){
+		CurrentPos = a;
+	}
+	
+	public int getPosition(){
+		return CurrentPos;
+	}
+	
+	public int getMaxSpeed(){
+		return MaxSpeed;
 	}
 		public void create(){
 		System.out.println("fast car created.");
