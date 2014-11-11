@@ -18,4 +18,7 @@ public class CrazyDriver implements Driver{
 	public void setVehicle(Vehicle car){
 		auto = car;
 	}
+		public void create(){
+		System.out.println("fast car created.");
+	}
 }
