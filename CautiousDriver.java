@@ -18,4 +18,9 @@ public class CautiousDriver implements Driver {
 	public void setVehicle(Vehicle car){
 		auto = car;
 	}
+	
+		public void setPersonality(){
+		System.out.println("Personality = Cautious");
+	}
+
 }
