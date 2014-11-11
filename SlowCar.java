@@ -23,4 +23,7 @@ public class SlowCar implements Vehicle {
 	public int getMaxSpeed(){
 		return MaxSpeed;
 	}
+		public void create(){
+		System.out.println("Slow Car created");	
+	}
 }
