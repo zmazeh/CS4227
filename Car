@@ -1,0 +1,205 @@
+Car
+==========================================================
+package car;
+
+import helper.global;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+import javax.swing.JOptionPane;
+
+import listener.CarListener;
+import road.Component;
+
+public abstract class Car {
+	//the position of left top corner
+	protected int left;
+	protected int top;
+	Component road;
+	int direction;	
+	int speed;
+	public Thread carThread;
+	public CarListener listener;
+	boolean live;
+	
+	public Car(int direction,Component road){
+		this.road=road;
+		live=true;
+		double fromCenter=road.getRoadWide()-1;
+		this.direction =direction;
+		switch(this.direction){
+		case global.north:left=global.CarInitPositonX;
+				top=0;
+				break;
+		case global.south :left=global.CarInitPositonX;
+				top=global.Height;
+				break;
+		case global.west: left=0;
+				top=global.CarInitPositionY;
+				break;
+		case global.east:left=global.Width;
+				top=global.CarInitPositionY;
+				break;
+		case global.north_east:left=(int)(global.CarInitPositonX+global.CarSize*fromCenter);
+				top=0;
+		break;
+		case global.south_west:left=(int)(global.CarInitPositonX-global.CarSize*fromCenter);
+				top=global.Height;
+		break;
+		case global.east_south:left=global.Width;
+				top=(int)(global.CarInitPositionY+global.CarSize*fromCenter);
+		break;
+		case global.west_north:left=0;
+				top=(int)(global.CarInitPositionY-global.CarSize*fromCenter);
+		break;
+		}
+		
+	}
+	public void move(){
+		System.out.println(getClass()+"move");
+		switch(direction){
+		case global.north:top+=global.CarSize;break;
+		case global.south:top-=global.CarSize;break;
+		case global.west:left+=global.CarSize;break;
+		case global.east:left-=global.CarSize;break;
+		case global.north_east:
+			top+=global.CarSize;
+		if(top>global.CarInitPositionY-road.getRoadWide()){
+			top=(int) (global.CarInitPositionY-(road.getRoadWide()-1)*global.CarSize);
+			left+=global.CarSize;
+		}
+		break;
+		case global.south_west:
+			top-=global.CarSize;
+		if(top<global.CarInitPositionY-road.getRoadWide()){
+			top=(int) (global.CarInitPositionY+(road.getRoadWide()-1)*global.CarSize);
+			left-=global.CarSize;
+		}
+		break;
+		case global.east_south:
+			left-=global.CarSize;
+		if(left<global.CarInitPositionY+road.getRoadWide()){
+			left=(int)(global.CarInitPositonX+(road.getRoadWide()-1)*global.CarSize);
+			top+=global.CarSize;
+		}
+		break;
+		case global.west_north:
+			left+=global.CarSize;
+		if(left>global.CarInitPositionY-road.getRoadWide()){
+			left=(int)(global.CarInitPositonX-(road.getRoadWide()-1)*global.CarSize);
+			top-=global.CarSize;
+		}
+
+		}
+		System.out.println(getClass()+" position("+left+","+top+")");
+
+	}
+	public void stop(){
+		live=false;
+	//	carThread.stop();
+	}
+	public void drawMe(Graphics g){
+		System.out.println(getClass()+"drawMe");
+		drawCar(g,left,top,global.CarSize,global.CarSize);
+	}
+	
+	public void drawCar(Graphics g, int x, int y, int width, int height) {
+		g.setColor(Color.blue);
+		g.fill3DRect(x, y, width, height, true);
+	}
+	
+	public void start(){
+		carThread=new Thread(new CarDriver());
+		carThread.start();
+	}
+	
+	protected class CarDriver implements Runnable{
+
+		public void run() {
+			while(live){
+				move();
+				listener.CarMove(Car.this);
+				IsLive();
+				try {
+					Thread.sleep(speed*1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
+	}
+	public void addCarListener(CarListener l){
+	   	if(l!=null){
+    		listener=l;
+    	}
+    	start();
+	}
+	public void IsLive(){
+		if(top>global.Height||top<0||left>global.Width||left<0){
+			live=false;
+		}
+	}
+	public int getLeft() {
+		return left;
+	}
+	public void setLeft(int left) {
+		this.left = left;
+	}
+	public int getTop() {
+		return top;
+	}
+	public void setTop(int top) {
+		this.top = top;
+	}
+
+}
+
+
+slowCar
+==================================================
+import helper.global;
+
+import java.awt.Graphics;
+
+import road.Component;
+import road.Road;
+
+public class SlowCar extends Car {
+	public SlowCar(int direction,Component road){
+		super(direction,road);
+		speed=global.SlowCarSpeed;
+	}
+	public SlowCar(int speed,int direction,Road road){
+		super(direction,road);
+		this.speed=speed;
+	}
+
+}
+
+fastCar
+====================================================
+import helper.global;
+
+import java.awt.Graphics;
+
+import road.Component;
+import road.Road;
+
+public class FastCar extends Car {
+
+//	Controller controller;
+
+	public FastCar(int direction,Component road){
+		super(direction,road);
+		speed=global.FastCarSpeed;
+
+	}
+	public FastCar(int speed,int direction,Road road){
+		super(direction,road);
+		this.speed=speed;
+	}
+
+}
